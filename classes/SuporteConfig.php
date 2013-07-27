@@ -14,7 +14,7 @@ class SuporteConfig  {
 	function __construct() {
 		//register an activation hook for the plugin
                 $this->view = new Views();
-            
+                //$this->notificacoes = new Notificacao();
 		register_activation_hook( __FILE__, array( &$this, 'install_suporte_config' ) );
 
 		//Hook up to the init action
@@ -26,8 +26,8 @@ class SuporteConfig  {
 	 * Runs when the plugin is activated
 	 */  
 	function install_suporte_config() {
-                $this->view->array = (object)array('nome'=>'Alisson','cidade'=>'Teresina');
-                $this->view->render('admin');
+            // loads template from `v/sign_in.mustache` and renders it.
+            $this->view->get_admin(array('nome'=>'Alisson','cidade'=>'Teresina'));
 	}
         function config_suport_menu() {
             if (function_exists('add_menu_page')) {
@@ -39,17 +39,33 @@ class SuporteConfig  {
 	 */
 	function init_suporte_config() {
 		// Setup localization
+                global $pagenow;
+                $notice = "Esse aviso tem o intuito de informá-lo que <strong>falta 3 dia </strong>para o pagamento do suporte do <strong><em>".get_bloginfo('name')."</em></strong>.";
 		load_plugin_textdomain( self::slug, false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 		// Load JavaScript and stylesheets
 		$this->register_scripts_and_styles();
 
 	
-		if ( is_admin() ) {
-			//this will run when in the WordPress admin
+		if ( is_admin() ) {                   
+                    //$dataLimite = dataDif($hj ,$bloqueio,'d');
+                    if($pagenow === 'index.php'){
+//                            if($wp_config_notice['status_pg'] !='pago' && strtotime($hj) === $timeNotice or $dataLimite > 0 ){
+//                                    add_action( 'admin_notices', 'wp_suport_notice' );
+//                             }
+                        $this->view->get_notificacoes(array(
+                            'nome'=>'Alisson',
+                            'email'=>'alissonsdearaujo@gmail.com',
+                            'teste'=>'Teste',
+                            'fone' =>'8698176475',
+                            'avatar' =>get_avatar( 'alissonsdearaujo@gmail.com' , 50 ),
+                            'notice' =>$notice 
+                        ));
+                    }
+			
 		} else {
 			//this will run when on the frontend
 		}
-
+                
 		/*
 		 * TODO: Define custom functionality for your plugin here
 		 *

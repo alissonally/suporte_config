@@ -13,11 +13,11 @@
 class Notificacao {
     
     public function __construct() {
-        $this->view = new Views();
-        add_action('admin_notices', array( &$this, 'get_noticificacoes' ));
+        $this->view = new Views();        
     }
     
     public function get_notificacoes(){
+        add_action('admin_notices', array( &$this, 'get_notificacoes' ));
         $this->view->wp_config_notice = array('teste' => 'Teste');
         $this->view->render('notificacao');
     }
