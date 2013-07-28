@@ -1,0 +1,4 @@
+# ignorando templates do smarty
+layout/tpm/*
+# ignorando projetos netbeans
+nbproject/*
