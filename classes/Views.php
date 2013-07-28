@@ -14,22 +14,28 @@ class Views {
 
     public function __construct() {
         $this->options = array('extension' => '.html');
-        $this->m = new Mustache_Engine(array(
+        $this->mustache = new Mustache_Engine(array(
+                   // 'template_class_prefix' => '__MyTemplates_',
+                    'cache' => PATH_PLUGIN . '/layout/tpm',
+                    //'cache_file_mode' => 0666, // Please, configure your umask instead of doing this :)
                     'loader' => new Mustache_Loader_FilesystemLoader(PATH_PLUGIN . '/layout', $this->options),
-                ));
+                    //'partials_loader' => new Mustache_Loader_FilesystemLoader(dirname(__FILE__) . '/views/partials'),
+//                    'helpers' => array('i18n' => function($text) {
+//                            // do something translatey here...
+//                        }),
+                    'escape' => function($value) {
+                        return htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
+                    },
+                    'charset' => 'utf-8',
+                    'logger' => new Mustache_Logger_StreamLogger('php://stderr'),
+                    'strict_callables' => true,
+                ));     
     }
 
-    public function get_admin($data = array()) {
-        echo $this->m->render('admin', $data);
+    public function template($template, $data) {
+        $tpl = $this->mustache->loadTemplate($template); 
+        echo $tpl->render($data);
     }
-    
-    public function get_notificacoes($data = array()){
-        $data_obj = (object)$data; 
-        //echo get_avatar( 'alissonsdearaujo@gmail.com' , 50 );
-        add_action('admin_notices', array( &$this, 'get_notificacoes' ));
-        echo $this->m->render('notificacao', $data_obj);
-    }
-
 }
 
 ?>

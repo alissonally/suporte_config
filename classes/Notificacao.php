@@ -11,17 +11,37 @@
  * @author alissonaraujo
  */
 class Notificacao {
-    
-    public function __construct() {
-        $this->view = new Views();        
+
+     public function admin_view(){
+        $blogusers = new WP_User_Query(array(
+                    'exclude' => array(1),
+                    'fields' => array( 'user_login', 'user_nicename', 'user_email', 'display_name' )
+                    )
+        );
+
+        return array (
+            'icone' => get_screen_icon('edit-comments'),
+            'users' => $blogusers->results
+         );   
+        
     }
-    
-    public function get_notificacoes(){
-        add_action('admin_notices', array( &$this, 'get_notificacoes' ));
-        $this->view->wp_config_notice = array('teste' => 'Teste');
-        $this->view->render('notificacao');
+
+    public function get_notificacoes() {
+        return array(
+            array(
+                'nome' => 'José',
+                'cidade' => 'Teresina'
+            ),
+            array(
+                'nome' => 'Antonio',
+                'cidade' => 'Valença'
+            ),
+            array(
+                'nome' => 'João',
+                'cidade' => 'Pimenteiras'
+            )
+        );
     }
-    
 }
 
 ?>
