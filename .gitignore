@@ -1,4 +1,4 @@
 # ignorando cache
-# layout/tpm/*
+layout/tpm/*
 # ignorando projetos netbeans
-# nbproject/*
+nbproject/*

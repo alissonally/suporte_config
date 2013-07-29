@@ -1,22 +1,22 @@
 <div id="floater" style="display: none;">
     <a href="javascript:void(0)" onclick="javascript:esconde()" class="bt-fecharbanner">Clique aqui para fechar</a>	
     <div class="aviso">
-        <div class="avatar">{{{avatar}}}</div>
-        <span class="ident"><strong>{{}}</strong></span>
-        <span class="ident" style="margin-top:3px"><strong></strong></span>
+        <div class="avatar">{{{valores_options.avatar}}}</div>
+        <span class="ident"><strong>{{valores_options.nome_suporte}}</strong></span>
+        <span class="ident" style="margin-top:3px"><strong>{{valores_options.especialidade_suporte}}</strong></span>
         <div class="content">
-            <p>Olá, <strong>{{nome}}</strong><br />
-            {{{notice}}}
+            <p>Olá, <strong>{{valores_options.current_user}}</strong><br />
+            {{{valores_options.notice}}}
             </p>
-            <p> Seu acesso será bloqueado em {{teste}} dias.<br />			
-                Data do bloqueio <em><strong>{{teste}}</em></strong><br /><br />
+            <p> Seu acesso será bloqueado em {{valores_options.prazo_bloqueio}} dias.<br />			
+                Data do bloqueio <em><strong>{{valores_options.data_bloqueio}}</em></strong><br /><br />
                 Lembre-se de manter em dia nossa parceria.
             </p>
 
             <p>Caso já tenha efetuado o pagamento, favor desconsidere este aviso</p>
             <div class="ass">
-                Email:{{email}}<br />
-                Fone:{{fone}}
+                Email:{{valores_options.email_suporte}}<br />
+                Fone:{{valores_options.fone_suporte}}
             </div>
         </div>	
     </div>

@@ -1,27 +1,17 @@
 <div class="wrap">
 	{{{admin.icone}}}	
 	<h2 style='margin:0 0 15px'> Configurações do Suporte </h2>
-
-	<script type="text/javascript">
-	   function troca(){
-				valor = document.getElementById('selectlista').value;
-				valortexto = document.getElementById('user_block').value;
-			if(valor == '0'){
-				document.getElementById('user_block').value = "valor 0";
-			} else {
-				document.getElementById('user_block').value = valor;
-			}
-		}
-   </script>
-   <form method="post" action="options-general.php?page=suporte">
-		
-		<input id="user_block"  name="user_block" type="hidden" value="" style="width:100px" />
+	{{{mensagem}}}
+   <form method="post" action="{{url_admin}}options-general.php?page=suporte_config">
+		{{{nonce_field}}}
+		<input id="user_block"  name="user_block" type="hidden" value="{{valores.user_block}}" style="width:100px" />
 		<table class="form-table">
 			<tr valign="top">
 				<th scope="row">Usuário do Sistema</th>
 				<td>
-					<select name="" id="selectlista" onchange="troca();" >
-					<option value="">etest</option> 
+					<select name="" id="selectlista" onchange="user_select();" >
+					<option value="">
+						{{# user_blog}}	{{display_name}} {{/user_blog}} {{^ user_blog}} Selecione um usuário {{/user_blog}}</option>
 						<optgroup label="Usuários">
 						  {{# admin.users}}
 							<option value="{{user_login}}">{{display_name}}</option>
@@ -32,39 +22,40 @@
 		   </tr>
 		   <tr valign="top">
 				<th scope="row">Nome do Suporte: </th>
-				<td><input type="text" name="nome_suporte" value="" size="50"/></td>	   
+				<td><input type="text" name="nome_suporte" value="{{{valores.nome_suporte}}}" size="50"/></td>	   
 		   </tr>
 		   <tr valign="top">
 				<th scope="row">Email do Suporte: </th>
-				<td><input type="text" name="email_suporte" value="" size="50"/></td>	   
+				<td><input type="text" name="email_suporte" value="{{{valores.email_suporte}}}" size="50"/></td>	   
 		   </tr>   
 		   <tr valign="top">
 				<th scope="row">Especialidade do Suporte: </th>
-				<td><input type="text" name="especialidade_suporte" value="" size="50"/></td>	   
+				<td><input type="text" name="especialidade_suporte" value="{{{valores.especialidade_suporte}}}" size="50"/></td>	   
 		   </tr>
 		   <tr valign="top">
 				<th scope="row">Fone do Suporte: </th>
-				<td><input type="text" name="fone_suporte" value="" /></td>	   
+				<td><input type="text" name="fone_suporte" value="{{{valores.fone_suporte}}}" /></td>	   
 		   </tr>
 		   <tr valign="top">
 				<th scope="row">Dia do vencimento: </th>
-				<td><input type="text" name="vencimento" value="" size="2"/><br />
+				<td><input type="text" name="vencimento" value="{{{valores.vencimento}}}" size="2"/><br />
 					<span class="description">Dia do pagamento do suporte</span></td>
 		   </tr>
 		   <tr valign="top">
 				<th scope="row">Carência: </th>
-				<td><input type="text" name="carencia" value="" size="2"/><br />
+				<td><input type="text" name="carencia" value="{{{valores.carencia}}}" size="2"/><br />
 					<span class="description">Quantos dias após o vencimento será bloqueado o acesso</span></td>
-		   </tr>
+		   </tr>		   
 		   <tr valign="top">
 				<th scope="row">Status pagamento: </th>
-				<td><input type="radio" name="status_pg" id="pago" value="pago"  />
+				<td><input type="radio" name="status_pg" value="pago" {{# status}}checked="checked"{{/ status}}  />
 					<label for="pago">Pago</label>
 					<br />
-					<input type="radio" name="status_pg" id="em_aberto" value="em_aberto" />
+					<input type="radio" name="status_pg" value="em_aberto" {{^ status}}checked="checked"{{/ status}}  />
 					<label for="em_aberto">Em aberto</label>
 					<br />
-					<span class="description">Informar status do pagamento</span></td>
+					<span class="description">Informar status do pagamento</span>
+				</td>
 		   </tr>
 	   <table>
 		<p class="submit" style="clear: both;">
@@ -72,5 +63,4 @@
 			<input type="hidden" name="wp_suporte_config" value="sim" />
 		</p>
    </form>
-	
 </div>

@@ -5,7 +5,7 @@
     Description:
         Purpose of the stylesheet follows.
 */
-#floater{ text-align:center; position:absolute; width:auto; float:center; z-index:99; left:20%; top:15%}
+#floater{ text-align:center; position:absolute; width:auto; float:center; z-index:99; left:20%; top:2%}
 .bt-fecharbanner{background:#8CC1E9;  bottom:0;  color:#FFF;  font-size:17px;  padding:10px 0;  position:absolute;  right:0;  text-decoration:none;  width:100%;  z-index:999999}
 .aviso{background:none repeat scroll 0 0 #F5F5F5;  border:1px solid #CCC;  box-shadow:1px 1px 5px #999;  height:350px;  position:relative;  width:450px}
 .avatar{float:left;  margin:5px;  width:50px}
