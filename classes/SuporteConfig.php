@@ -21,10 +21,6 @@ class SuporteConfig {
         add_action('init', array(&$this, 'init_suporte_config'));
         add_action('admin_menu', array(&$this, 'config_suport_menu'));
     }
-
-    /**
-     * Runs when the plugin is activated
-     */
     function install_suporte_config() {  
         $this->view->template('admin', array('admin'=>$this->notificacoes->admin_view()));
     }
@@ -35,19 +31,29 @@ class SuporteConfig {
         }
     }
 
-    /**
-     * Runs when the plugin is initialized
-     */
     function init_suporte_config() {
         // Setup localization
-        global $pagenow;
-        $notice = "Esse aviso tem o intuito de informá-lo que <strong>falta 3 dia </strong>para o pagamento do suporte do <strong><em>" . get_bloginfo('name') . "</em></strong>.";
+        
         load_plugin_textdomain(self::slug, false, dirname(plugin_basename(__FILE__)) . '/lang');
         // Load JavaScript and stylesheets
         $this->register_scripts_and_styles();
 
 
         if (is_admin()) {
+            
+        } else {
+            //Se existir script para front-end vai aqui
+        }
+
+
+        add_action('admin_notices', array(&$this, 'float_notice'));
+        add_filter('your_filter_here', array(&$this, 'filter_callback_method_name'));
+    }
+
+    function float_notice() {
+        // TODO define your action method here
+        global $pagenow;
+            $notice = "Esse aviso tem o intuito de informá-lo que <strong>falta 3 dia </strong>para o pagamento do suporte do <strong><em>" . get_bloginfo('name') . "</em></strong>.";    
             //$dataLimite = dataDif($hj ,$bloqueio,'d');
             if ($pagenow === 'index.php') {
 //                            if($wp_config_notice['status_pg'] !='pago' && strtotime($hj) === $timeNotice or $dataLimite > 0 ){
@@ -62,32 +68,12 @@ class SuporteConfig {
                     'notice' => $notice
                 ));
             }
-        } else {
-            //this will run when on the frontend
-        }
-
-        /*
-         * TODO: Define custom functionality for your plugin here
-         *
-         * For more information: 
-         * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-         */
-        add_action('your_action_here', array(&$this, 'action_callback_method_name'));
-        add_filter('your_filter_here', array(&$this, 'filter_callback_method_name'));
-    }
-
-    function action_callback_method_name() {
-        // TODO define your action method here
     }
 
     function filter_callback_method_name() {
         // TODO define your filter method here
     }
 
-    /**
-     * Registers and enqueues stylesheets for the administration panel and the
-     * public facing site.
-     */
     private function register_scripts_and_styles() {
         if (is_admin()) {
             $this->load_file(self::slug . '-admin-script', 'js/admin.js', true);
@@ -97,21 +83,11 @@ class SuporteConfig {
         } // end if/else
     }
 
-// end register_scripts_and_styles
-
-    /**
-     * Helper function for registering and enqueueing scripts and styles.
-     *
-     * @name	The 	ID to register with WordPress
-     * @file_path		The path to the actual file
-     * @is_script		Optional argument for if the incoming file_path is a JavaScript source file.
-     */
     private function load_file($name, $file_path, $is_script = false) {
 
         $url = URL_PLUGIN . $file_path;
 
         $file = PATH_PLUGIN . $file_path;
-        // echo $file;
         if (file_exists($file)) {
             if ($is_script) {
                 wp_register_script($name, $url, array('jquery')); //depends on jquery
