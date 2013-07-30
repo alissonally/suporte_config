@@ -19,6 +19,7 @@ require_once (PATH_PLUGIN .'lib/Utils.php');
 require_once (PATH_PLUGIN .'Classes/Views.php');
 require_once (PATH_PLUGIN .'Classes/Notificacao.php');
 require_once (PATH_PLUGIN .'Classes/Model.php');
+require_once (PATH_PLUGIN .'Classes/Splash.php');
 require_once (PATH_PLUGIN .'lib/Mustache/Autoloader.php');
 
 Mustache_Autoloader::register();
