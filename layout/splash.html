@@ -3,22 +3,29 @@
     <head>
         <meta charset="UTF-8">
         <title>{{tema.title}}</title>
-        <style>
-            *{margin:0; padding:0}
-            #warnig{width:600px; margin:100px auto 0; display:table; padding:8px; border:#BCE8F1 1px solid; color:#3A87AD; position:relative;}
-            #warnig .warnig{padding:5px; border-radius:5px; color:#B94A48; background:#F2DEDE; border:1px solid #EED3D7; font-size:18px; margin:5px 0}
-            #warnig h1{font-size:18px}
-            #warnig p{ font-size:14px; margin:8px 0}
-            h2.access{position:absolute; top:-25px; left: 0px; color:#B94A48; font-size:20px; text-transform:uppercase}
-        </style>
+        <link rel="stylesheet" href="{{tema.url_plugin}}assets/css/bootstrap.min.css">
     </head>
-    <body>
-        <div id="warnig">
-            <h2 class="access">{{tema.aviso}}</h2>
+    <body>         
+        <!-- Modal -->
+        <div id="modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="alert-heading">{{tema.aviso}}</h4>
+          </div>
+          <div class="modal-body">
             {{tema.aviso_user}},
-            <div class="warnig">
-                {{{tema.conteudo}}}
-            </div>
-        </div>	
+            <p>{{{tema.conteudo}}}</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+          </div>
+        </div>
+        <script src="{{tema.url_plugin}}assets/js/jquery.min.js"></script>   
+        <script src="{{tema.url_plugin}}assets/js/bootstrap.min.js"></script>	
+        <script>
+          $(window).load(function(){
+              $('#modal').modal('show');
+           });
+        </script>
     </body>
 </html>

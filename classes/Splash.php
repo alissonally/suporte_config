@@ -25,13 +25,14 @@ class Splash {
                 'usuario' => $current_user->display_name,
                 'aviso'=> 'Aviso de bloqueio',
                 'conteudo'=> self::get_conteudo(),
-                'aviso_user'=> 'Desculpe '.$current_user->display_name
+                'aviso_user'=> 'Desculpe '.$current_user->display_name,
+                'url_plugin'=> URL_PLUGIN
             )
         );
     }
     
     public function get_conteudo(){
-        $conteudo ="<h1>Você não tem privilégio para acessar o painel administrativo</h1>
+        $conteudo ="<h3>Você não tem privilégio para acessar o painel administrativo</h3>
 		    <p>Seu acesso foi bloqueado por <strong>falta de pagamento</strong>.</p>
 		    <p>Entre em contato com o suporte para maiores detalhes.</p>
 		    <p>Não se preocupe, seus leitores do <strong> {$this->blog_name} </strong> não têm acesso a este aviso.</p>";

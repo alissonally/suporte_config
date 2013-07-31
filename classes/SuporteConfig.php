@@ -84,8 +84,8 @@ class SuporteConfig {
 
     private function register_scripts_and_styles() {
         if (is_admin()) {
-            $this->load_file(self::slug . '-admin-script', 'js/admin.js', true);
-            $this->load_file(self::slug . '-admin-style', 'css/admin.css');
+            $this->load_file(self::slug . '-admin-script', 'assets/js/admin.js', true);
+            $this->load_file(self::slug . '-admin-style', 'assets/css/admin.css');
         } else {
             
         } // end if/else
