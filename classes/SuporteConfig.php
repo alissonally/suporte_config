@@ -65,7 +65,7 @@ class SuporteConfig {
         } else {
             //Se existir script para front-end vai aqui
         }
-        if ($this->notificacoes->get_notificacoes()->user_block == $this->notificacoes->user_logado()) {
+        if ($this->notificacoes->get_notificacoes()->user_block == $this->notificacoes->user_logado()->user_login) {
             add_action('admin_notices', array(&$this, 'float_notice'));
         }
     }

@@ -4,28 +4,28 @@ class Splash {
     
     function __construct() {
         $this->view = new Views();
+        $this->notificacoes = new Notificacao();
         add_action('template_redirect', array(&$this, 'set_splash'));
         $this->blog_name = get_bloginfo('name');
         $this->title = $this->blog_name . ' | ' . 'Aviso de bloqueio';
     }
 
     public function set_splash() {
-        if (is_admin() && is_user_logged_in()) {
-            $this->view->template('splash', self::set_splash_tema());
+        if (is_admin() && is_user_logged_in() && $this->notificacoes->get_notificacoes()->user_block == $this->notificacoes->user_logado()->user_login) {
+             $this->view->template('splash', self::set_splash_tema());
             exit;
         }
     }
 
     public function set_splash_tema() {
-        global $current_user;
         return array(
             'tema' => array(
                 'blog_name' => $this->blog_name,
-                'title' => apply_filters('wp_notive', $this->title),
+                'title' => apply_filters('wp_notice', $this->title),
                 'usuario' => $current_user->display_name,
                 'aviso'=> 'Aviso de bloqueio',
                 'conteudo'=> self::get_conteudo(),
-                'aviso_user'=> 'Desculpe '.$current_user->display_name,
+                'aviso_user'=> 'Desculpe '.$this->notificacoes->user_logado()->display_name,
                 'url_plugin'=> URL_PLUGIN
             )
         );

@@ -44,7 +44,7 @@ class Notificacao {
     
     public function user_logado(){
         global $current_user; 
-        return $current_user->user_login;
+        return $current_user;
     }
 
     
