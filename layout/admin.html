@@ -48,13 +48,24 @@
 		   </tr>		   
 		   <tr valign="top">
 				<th scope="row">Status pagamento: </th>
-				<td><input type="radio" name="status_pg" value="pago" {{# status}}checked="checked"{{/ status}}  />
-					<label for="pago">Pago</label>
+				<td><input type="radio" id="status_pg_pago" name="status_pg" value="pago" {{# status}}checked="checked"{{/ status}}  />
+					<label for="status_pg_pago">Pago</label>
 					<br />
-					<input type="radio" name="status_pg" value="em_aberto" {{^ status}}checked="checked"{{/ status}}  />
-					<label for="em_aberto">Em aberto</label>
+					<input type="radio" id="status_pg_aberto"  name="status_pg" value="em_aberto" {{^ status}}checked="checked"{{/ status}}  />
+					<label for="status_pg_aberto">Em aberto</label>
 					<br />
 					<span class="description">Informar status do pagamento</span>
+				</td>
+		   </tr>
+		   <tr valign="top">
+				<th scope="row">Status de acesso: </th>
+				<td><input type="radio" id="status_bloqueio_1" name="status_bloqueio" disabled="disabled" value="1" {{# bloqueio}}checked="checked"{{/ bloqueio}}  />
+					<label for="status_bloqueio_1">Bloqueado</label>
+					<br />
+					<input type="radio" id="status_bloqueio_0" name="status_bloqueio" disabled="disabled" value="0" {{^ bloqueio}}checked="checked"{{/ bloqueio}}  />
+					<label for="status_bloqueio_0">Livre</label>
+					<br />
+					<span class="description">Informa status do acesso</span>
 				</td>
 		   </tr>
 	   <table>

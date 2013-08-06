@@ -23,6 +23,7 @@ class SuporteConfig {
         //Hook up to the init action
         add_action('init', array(&$this, 'init_suporte_config'));
         add_action('admin_menu', array(&$this, 'config_suport_menu'));
+        add_action('init', array(&$this, 'set_status_de_bloqueio'));
     }
 
     function install_suporte_config() {
@@ -33,7 +34,9 @@ class SuporteConfig {
             } else {
                 $mensagem = '<div class="error" ><p> Erro ao salvar configurações!</p></div>';
             }
-        }
+        };
+
+
         $this->view->template('admin', array(
             'admin' => $this->notificacoes->admin_view(),
             'url_admin' => ADMIN_URL,
@@ -41,8 +44,9 @@ class SuporteConfig {
             'mensagem' => $mensagem,
             'valores' => $this->notificacoes->get_notificacoes(),
             'status' => $this->notificacoes->get_notificacoes()->status_pg == 'pago' ? true : false,
+            'bloqueio' => $this->notificacoes->get_status_acesso()->status_bloqueio == 1 ? true : false,
             'user_blog' => $this->notificacoes->get_user_bloqueado()
-                )
+            )
         );
     }
 
@@ -59,7 +63,6 @@ class SuporteConfig {
         // Load JavaScript and stylesheets
         $this->register_scripts_and_styles();
 
-
         if (is_admin()) {
             $this->splash->set_splash();
         } else {
@@ -68,17 +71,19 @@ class SuporteConfig {
         if ($this->notificacoes->get_notificacoes()->user_block == $this->notificacoes->user_logado()->user_login) {
             add_action('admin_notices', array(&$this, 'float_notice'));
         }
+
+        if(strtotime($this->notificacoes->get_config_times()->data_atual) == $this->notificacoes->get_config_times()->data_block_pre){
+            $this->model->set_option_suporte($this->splash->get_option_suporte());
+        }
+
     }
 
     function float_notice() {
-        // TODO define your action method here
         global $pagenow;
-        //$dataLimite = dataDif($hj ,$bloqueio,'d');
         if ($pagenow === 'index.php') {
-//                            if($wp_config_notice['status_pg'] !='pago' && strtotime($hj) === $timeNotice or $dataLimite > 0 ){
-//                                    add_action( 'admin_notices', 'wp_suport_notice' );
-//                             }
-            $this->view->template('notificacao', array('valores_options' => $this->notificacoes->get_floater()));
+            if($this->notificacoes->get_notificacoes()->status_pg !='pago' && strtotime($this->notificacoes->get_config_times()->data_atual) === $this->notificacoes->get_config_times()->data_init_notificacao or $this->notificacoes->get_config_times()->prazo_bloqueio > 0 ){
+                $this->view->template('notificacao', array('valores_options' => $this->notificacoes->get_floater()));
+            }  
         }
     }
 
@@ -87,7 +92,7 @@ class SuporteConfig {
             $this->load_file(self::slug . '-admin-script', 'assets/js/admin.js', true);
             $this->load_file(self::slug . '-admin-style', 'assets/css/admin.css');
         } else {
-            
+
         } // end if/else
     }
 
@@ -105,10 +110,16 @@ class SuporteConfig {
                 wp_enqueue_style($name);
             } // end if
         } // end if
+    }// end load_file
+
+
+    public function set_status_de_bloqueio(){
+        if($this->notificacoes->get_notificacoes()->status_pg !='pago' && $this->notificacoes->get_config_times()->prazo_bloqueio <= 0) {
+            $this->model->set_status_block(array('status_bloqueio'=> 1));
+        } else {
+            $this->model->set_status_block(array('status_bloqueio'=> 0));
+        }
     }
-
-// end load_file
 }
-
 // end class
 ?>
